@@ -11,6 +11,7 @@ const router = express.Router()
  ********************************************/
 router.get("/",AsyncHandler(async(req,res) =>{
     const products = await Product.find({})
+    // throw new Error("Error!")
     res.json(products)
 }))
 

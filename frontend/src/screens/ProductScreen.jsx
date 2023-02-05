@@ -1,35 +1,50 @@
 import React,{ useState, useEffect } from 'react'
 import { Link, useParams } from "react-router-dom";
-import { Row, Col, Image, ListGroup, Card, Button, ListGroupItem} from "react-bootstrap"
+import { useDispatch, useSelector } from 'react-redux';
+import { listProductDetails } from "../actions/productAction"
+import { Row, Col, Image, ListGroup, Card, Button, ListGroupItem, Form} from "react-bootstrap"
 import Rating from "../components/Rating"
 import products from '../products'
-import axios from 'axios';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
+// import axios from 'axios';
 
 function ProductScreen({match}) {
     let { id } = useParams();
     id = String(id)
     id = id.split("}")[0]
     console.log(id)
-        // const product = products.find((p) => (String(p._id === id)));
-    const [product,setProduct] = useState({});
+    // const product = products.find((p) => (String(p._id === id)));
+    // const [product,setProduct] = useState({});
+    const dispatch = useDispatch()
+    const productDetails = useSelector(state => state.productDetails)
+    const { loading, error, product } = productDetails
+
+    //Qty
+    const [qty,setQty] = useState(0)
 
     useEffect(()=>{
-        const fetchProduct =async()=>{
-          // const res = axios.get("/api/products")
-          // res.data
-          const { data } = await axios.get(`/api/products/${id}`)
-          console.log(`/api/products/${id}`)
-          console.log("data:",data)
-          setProduct(data)
-        }
-        fetchProduct()
-      },[])
+        // const fetchProduct =async()=>{
+        //   // const res = axios.get("/api/products")
+        //   // res.data
+        //   const { data } = await axios.get(`/api/products/${id}`)
+        //   console.log(`/api/products/${id}`)
+        //   console.log("data:",data)
+        //   setProduct(data)
+        // }
+        // fetchProduct()
+        dispatch(listProductDetails(id))
+      },[dispatch])
+
     return (
           <>
             <Link className='btn btn-dark my-3' to="/">
                 Go back
             </Link>
-            <Row>
+            {
+                loading ? <Loader/> : error ? <Message variant="danger">{error}</Message>
+                :(
+                    <Row>
                 <Col md={6}>
                     <Image src={product.image} alt={product.name} fluid></Image>
                 </Col>
@@ -72,8 +87,29 @@ function ProductScreen({match}) {
                                     </Col>
                                 </Row>
                             </ListGroupItem>
+                            {product.countInStock > 0  && (
+                                <ListGroupItem>
+                                    <Row>
+                                        <Col>
+                                            Qty
+                                        </Col>
+                                        <Col>
+                                        <Form.Control as="select" value={qty} onChange={(e)=>setQty(e.target.value)}>
+                                            {[...Array(product.countInStock).keys()].map(x => (
+                                                <option key={x+1} value={x+1}>
+                                                    {x+1}
+                                                </option>
+                                            ))}
+                                        </Form.Control>
+                                        </Col>
+                                    </Row>
+                                </ListGroupItem>
+                            )}
                             <ListGroupItem>
-                                <Button className="btn-block" type="button" disabled={product.countInStock === 0}>
+                                <Button 
+                                onClick={addToCartHandler}
+                                className="btn-block" 
+                                type="button" disabled={product.countInStock === 0}>
                                     Add to Cart
                                 </Button>
                             </ListGroupItem>
@@ -81,6 +117,9 @@ function ProductScreen({match}) {
                     </Card>
                 </Col>
             </Row>
+            )
+            }
+            
           </>
       )
   
