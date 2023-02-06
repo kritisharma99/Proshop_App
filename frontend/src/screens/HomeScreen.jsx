@@ -12,8 +12,7 @@ const HomeScreen = () => {
   // const [products,setProducts] = useState([])
   const dispatch = useDispatch()
   const { loading, error, products } = useSelector((state) => state.productList)
-  //  = productList
-  // let loading = false
+ 
   useEffect(()=>{
     //making this comment -> we are not making direct axios call like thisbelow
     //now we will use listProduct from "productAction.js"
@@ -28,9 +27,6 @@ const HomeScreen = () => {
     dispatch(listProducts())
 
   },[dispatch])
-  // const products = []
-  // const error = false
-  // const loading=false
   console.log(products)
   return (
     <>

@@ -2,6 +2,7 @@ import React,{ useState, useEffect } from 'react'
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { listProductDetails } from "../actions/productAction"
+import { useNavigate } from "react-router-dom"
 import { Row, Col, Image, ListGroup, Card, Button, ListGroupItem, Form} from "react-bootstrap"
 import Rating from "../components/Rating"
 import products from '../products'
@@ -17,11 +18,12 @@ function ProductScreen({match}) {
     // const product = products.find((p) => (String(p._id === id)));
     // const [product,setProduct] = useState({});
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const productDetails = useSelector(state => state.productDetails)
     const { loading, error, product } = productDetails
-
+    console.log(loading,error,product)
     //Qty
-    const [qty,setQty] = useState(0)
+    const [qty,setQty] = useState(1)
 
     useEffect(()=>{
         // const fetchProduct =async()=>{
@@ -35,7 +37,9 @@ function ProductScreen({match}) {
         // fetchProduct()
         dispatch(listProductDetails(id))
       },[dispatch])
-
+      const addToCartHandler =()=>{
+        navigate(`/cart/${id}?qty=${qty}`)
+      }
     return (
           <>
             <Link className='btn btn-dark my-3' to="/">
@@ -106,10 +110,8 @@ function ProductScreen({match}) {
                                 </ListGroupItem>
                             )}
                             <ListGroupItem>
-                                <Button 
-                                onClick={addToCartHandler}
-                                className="btn-block" 
-                                type="button" disabled={product.countInStock === 0}>
+                                <Button onClick={addToCartHandler}
+                                className="btn-block" type="button" disabled={product.countInStock === 0}>
                                     Add to Cart
                                 </Button>
                             </ListGroupItem>
