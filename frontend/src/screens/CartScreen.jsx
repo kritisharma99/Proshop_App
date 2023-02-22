@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate,useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"
 import { Row,Col,ListGroup,Image,Form,Button,Card, ListGroupItem} from "react-bootstrap"
 import Message from "../components/Message"
@@ -14,6 +14,10 @@ function CartScreen() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    // const [searchParams] = useSearchParams();
+
+    // const redirect = searchParams.get("redirect");
+    // const redirect = location.search ? location.search.split('=')[1] : '/'
 
     const cart = useSelector(state => state.cart)
     const { cartItems } = cart
@@ -33,7 +37,9 @@ function CartScreen() {
     }
 
     const checkoutHandler = () => {
-        navigate("/login?redirect=shipping")
+        // navigate(`/${redirect}`);
+        // navigate("/login?redirect=shipping")
+        navigate('/shipping')
         console.log("check")
     }
   return (
