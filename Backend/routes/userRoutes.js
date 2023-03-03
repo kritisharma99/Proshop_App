@@ -1,10 +1,13 @@
 import express from 'express'
-import {authUser, getUserProfile, registerUser, updateUserProfile} from "../controllers/userControllers.js"
-import { protect } from "../middleware/authMiddleware.js"
+import {authUser, getUserProfile, registerUser, updateUserProfile, getUsers} from "../controllers/userControllers.js"
+import { protect,admin } from "../middleware/authMiddleware.js"
 
 const router = express.Router()
 
-router.route('/').post(registerUser)
+// router.route('/').post(registerUser).get(protect, getUsers) -> this gives all users -> by just providing token of required user
+//this will give only admin and this gonna work only if we provide token of admin
+//if we provide token of any user it will show -> not authorize as admin
+router.route('/').post(registerUser).get(protect, admin, getUsers)
 router.route("/login").post(authUser)
 router.route('/profile').get(protect, getUserProfile).put(protect, updateUserProfile)
 

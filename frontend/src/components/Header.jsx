@@ -12,6 +12,7 @@ function Header() {
   const {userinfo} = userLogin
   const logoutHandler = () =>{
     dispatch(logout())
+    
   }
   return (
     <header>

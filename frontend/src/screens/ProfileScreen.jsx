@@ -9,6 +9,7 @@ import Loader from "../components/Loader"
 import { getUserDetails, getUpdateDetails } from "../actions/userAction"
 import {listMyOrders} from "../actions/orderAction"
 import { USER_UPDATE_PROFILE_RESET } from '../const/userConstant'
+
 function ProfileScreen() {
     const [name, setName] = useState('');
     const [email,setEmail] = useState('');
