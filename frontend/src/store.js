@@ -4,7 +4,7 @@ import thunk from "redux-thunk"
 import { composeWithDevTools } from "redux-devtools-extension"
 import { productDetailsReducer, productReducer } from "./reducers/productReducers"
 import { cartReducer } from './reducers/cartReducers';
-import { orderCreateReducer, orderDetailsReducer, orderPayReducer } from './reducers/orderReducers';
+import { orderCreateReducer, orderDetailsReducer, orderPayReducer, orderListMyReducer } from './reducers/orderReducers';
 import { userDetailsReducer, userLoginReducer, userRegisterReducer, userUpdateReducer } from './reducers/userReducers';
 // const reducer = combineReducers({
 //     productList : productReducer,
@@ -30,7 +30,8 @@ const store = configureStore({
         userUpdate: userUpdateReducer,
         orderCreate: orderCreateReducer,
         orderDetails: orderDetailsReducer,
-        orderPay: orderPayReducer
+        orderPay: orderPayReducer,
+        orderListMy: orderListMyReducer
     }, 
     preloadedState: initialState, 
     // applyMiddleware(thunk)

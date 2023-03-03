@@ -11,7 +11,7 @@ function Header() {
   const dispatch = useDispatch()
   const {userinfo} = userLogin
   const logoutHandler = () =>{
-    dispatch.apply(logout())
+    dispatch(logout())
   }
   return (
     <header>
