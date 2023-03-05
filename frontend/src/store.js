@@ -2,10 +2,11 @@ import { combineReducers, applyMiddleware, createStore } from 'redux'
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from "redux-thunk"
 import { composeWithDevTools } from "redux-devtools-extension"
-import { productDetailsReducer, productReducer } from "./reducers/productReducers"
+import { productDetailsReducer, productReducer, productReviewCreateReducer,productTopReducer } from "./reducers/productReducers"
 import { cartReducer } from './reducers/cartReducers';
 import { orderCreateReducer, orderDetailsReducer, orderPayReducer, orderListMyReducer } from './reducers/orderReducers';
-import { userDetailsReducer, userLoginReducer, userRegisterReducer, userUpdateReducer } from './reducers/userReducers';
+import { userDetailsReducer, userLoginReducer, userRegisterReducer, 
+    userUpdateReducer, userListReducer, userDeleteReducer } from './reducers/userReducers';
 // const reducer = combineReducers({
 //     productList : productReducer,
 // })
@@ -23,6 +24,8 @@ const store = configureStore({
     reducer : {
         productList : productReducer,
         productDetails : productDetailsReducer,
+        productReviewCreate: productReviewCreateReducer,
+        productTop:productTopReducer,
         cart : cartReducer,
         user: userLoginReducer,
         userRegister: userRegisterReducer,
@@ -31,7 +34,9 @@ const store = configureStore({
         orderCreate: orderCreateReducer,
         orderDetails: orderDetailsReducer,
         orderPay: orderPayReducer,
-        orderListMy: orderListMyReducer
+        orderListMy: orderListMyReducer,
+        usersList : userListReducer,
+        userDelete: userDeleteReducer
     }, 
     preloadedState: initialState, 
     // applyMiddleware(thunk)

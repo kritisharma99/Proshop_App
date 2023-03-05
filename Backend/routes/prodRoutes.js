@@ -1,5 +1,6 @@
 import express from 'express'
-import {getProducts,getProductById} from "../controllers/productControllers.js"
+import {getProducts,getProductById, createProductReview, getTopProducts} from "../controllers/productControllers.js"
+import { protect, admin } from '../middleware/authMiddleware.js'
 //Moving this to controollres
 // import Product from '../models/productModel.js'
 // import AsyncHandler from "express-async-handler"
@@ -7,7 +8,11 @@ import {getProducts,getProductById} from "../controllers/productControllers.js"
 const router = express.Router()
 
 router.route("/").get(getProducts)
+router.get('/top', getTopProducts)
+router.route('/:id/reviews').post(protect, createProductReview)
+// router.route("/:id/reviews").post(protect,createProductReview)
 router.route("/:id").get(getProductById)
+
 
 //Moving this to controollres
 // router.get("/",AsyncHandler(async(req,res) =>{
